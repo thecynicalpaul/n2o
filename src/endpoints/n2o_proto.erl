@@ -19,7 +19,7 @@ init(_Transport, Req, _Opts, _) ->
     NewCtx = wf:fold(init,Ctx#cx.handlers,Ctx),
     wf:context(NewCtx),
     wf:reg(broadcast,{wf:peer(Req)}),
-    {Origin, _} = cowboy_req:header(<<"origin">>, Req, <<"*">>),
+    Origin = cowboy_req:header(<<"origin">>, Req, <<"*">>),
     ConfigOrigin = wf:to_binary(wf:config(n2o,origin,Origin)),
     wf:info(?MODULE,"Origin: ~p",[ConfigOrigin]),
     Req1 = wf:header(<<"Access-Control-Allow-Origin">>, ConfigOrigin, NewCtx#cx.req),
