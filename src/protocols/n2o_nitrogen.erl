@@ -85,6 +85,7 @@ receive_actions(Req) ->
         {actions,A} -> n2o_nitrogen:render_actions(A);
         _ -> receive_actions(Req)
     after 200 ->
-         QS = element(14, Req),
+        QS = cowboy_req:qs(Req),
+        %  QS = element(14, Req),
          wf:redirect(case QS of <<>> -> ""; _ -> "?" ++ wf:to_list(QS) end),
          [] end.
